@@ -1,0 +1,8 @@
+test.py
+.idea
+.DS_Store
+.debug
+*/*/__pycache__
+*/__pycache__
+__pycache__
+venv
