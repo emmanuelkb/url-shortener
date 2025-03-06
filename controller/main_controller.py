@@ -24,4 +24,11 @@ class MainController:
 
     def redirect(self, short_id):
         print(short_id)
-        requests.get('http://apple.com')
+        return {
+            'statusCode': 302,  # Use 301 for permanent redirect
+            'headers': {
+                'Location': 'https://www.apple.com',
+                'Cache-Control': 'no-cache'
+            },
+            'body': ''
+        }
