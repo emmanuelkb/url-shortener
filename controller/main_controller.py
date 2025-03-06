@@ -1,3 +1,5 @@
+import requests
+
 class MainController:
     def __init__(self, db_module):
         self.db_module = db_module
@@ -19,3 +21,7 @@ class MainController:
         response = self.db_module.fetch_item(query_params['short_id'])
         print(response)
         return response
+
+    def redirect(self, payload):
+        print(payload)
+        requests.get('http://apple.com')

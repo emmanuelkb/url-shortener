@@ -23,6 +23,10 @@ def fetch_all_urls():
 def delete_url():
     ...
 
+@APP.get("/abcde")
+def redirect_url():
+    return CONTROLLER.redirect(APP.current_event.body)
+
 def lambda_handler(event: dict, context: LambdaContext) -> dict:
     print(event)
     print(context)
