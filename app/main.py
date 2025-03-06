@@ -20,4 +20,6 @@ def create_url():
     ...
 
 def lambda_handler(event: dict, context: LambdaContext) -> dict:
+    print(event)
+    print(context)
     return app.resolve(event, context)
