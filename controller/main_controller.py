@@ -1,4 +1,5 @@
-import requests
+from aws_lambda_powertools.event_handler import Response
+from http import HTTPStatus
 
 class MainController:
     def __init__(self, db_module):
@@ -24,11 +25,12 @@ class MainController:
 
     def redirect(self, short_id):
         print(short_id)
-        return {
-            'statusCode': 302,  # Use 301 for permanent redirect
-            'headers': {
-                'Location': 'https://www.apple.com',
-                'Cache-Control': 'no-cache'
-            },
-            'body': ''
+        headers = {
+            'Location': 'https://www.apple.com',
+            'Cache-Control': 'no-cache'
         }
+        return Response(
+            status_code=HTTPStatus.TEMPORARY_REDIRECT.value,
+            headers=headers,
+            body=''
+        )
