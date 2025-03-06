@@ -249,25 +249,7 @@ Resources:
             Service: cloudformation.amazonaws.com
       Path: /
       ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess'
-        - 'arn:aws:iam::aws:policy/AmazonAPIGatewayAdministrator'
-        - 'arn:aws:iam::aws:policy/AWSLambda_FullAccess'
-      Policies:
-        - PolicyName: CloudFormationResourceManagement
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - 'iam:GetRole'
-                  - 'iam:CreateRole'
-                  - 'iam:DeleteRole'
-                  - 'iam:PutRolePolicy'
-                  - 'iam:AttachRolePolicy'
-                  - 'iam:DetachRolePolicy'
-                  - 'iam:DeleteRolePolicy'
-                  - 'iam:PassRole'
-                Resource: '*'
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
 
   CodePipelineExecutionRole:
       Type: AWS::IAM::Role
