@@ -13,9 +13,13 @@ Resources:
       AttributeDefinitions:
         - AttributeName: short_id
           AttributeType: S
+        - AttributeName: created_at
+          AttributeType: S
       KeySchema:
         - AttributeName: short_id
           KeyType: HASH
+        - AttributeName: created_at
+          KeyType: RANGE
 
   UrlShortener:
     Type: AWS::Serverless::Function

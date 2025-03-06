@@ -1,5 +1,11 @@
-from aws_lambda_powertools.event_handler import Response
+import random
+import string
+from datetime import datetime
 from http import HTTPStatus
+from utilities import schema_validation
+from aws_lambda_powertools.event_handler import Response
+from aws_lambda_powertools.utilities.validation import SchemaValidationError, validate
+
 
 class MainController:
     def __init__(self, db_module):
@@ -7,12 +13,15 @@ class MainController:
 
 
     def shorten_url(self, payload):
-        #Validate payload
         print(payload)
+        validate(event=payload,schema=schema_validation.shorten_schema)
+        short_id = self.generate_short_id()
         response = self.db_module.put_item({
-            'short_id': 'abcde',
-            'long_url': 'www.facebook.com',
-            'counter': 0})
+            'short_id': short_id,
+            'long_url': payload['long_url'],
+            'counter': 0,
+            'created_at': datetime.now().isoformat(),
+        })
         print(response)
         return response
 
@@ -34,3 +43,7 @@ class MainController:
             headers=headers,
             body=''
         )
+
+    @staticmethod
+    def generate_short_id():
+        return ''.join(random.sample(string.ascii_letters+string.digits,5))
