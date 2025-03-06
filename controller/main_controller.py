@@ -22,6 +22,6 @@ class MainController:
         print(response)
         return response
 
-    def redirect(self, payload):
-        print(payload)
+    def redirect(self, short_id):
+        print(short_id)
         requests.get('http://apple.com')

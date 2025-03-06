@@ -16,16 +16,16 @@ def create_url():
     return CONTROLLER.shorten_url(APP.current_event.body)
 
 @APP.get("/urls")
-def fetch_all_urls():
+def fetch_url():
     return CONTROLLER.fetch_url(APP.current_event.query_string_parameters)
 
 @APP.delete("/delete-url")
 def delete_url():
     ...
 
-@APP.get("/abcde")
-def redirect_url():
-    return CONTROLLER.redirect(APP.current_event.body)
+@APP.get("/<short_id>")
+def redirect_url(short_id:str):
+    return CONTROLLER.redirect(short_id)
 
 def lambda_handler(event: dict, context: LambdaContext) -> dict:
     print(event)
