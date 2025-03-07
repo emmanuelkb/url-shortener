@@ -13,7 +13,7 @@ CONTROLLER = main_controller.MainController(DB_CLIENT)
 
 @APP.post("/shorten")
 def create_url():
-    return CONTROLLER.shorten_url(APP.current_event.body)
+    return CONTROLLER.shorten_url(APP.current_event.json_body)
 
 @APP.get("/urls")
 def fetch_url():
