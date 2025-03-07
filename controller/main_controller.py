@@ -40,8 +40,7 @@ class MainController:
         response = self.db_module.fetch_item('Cx2N7e')
         if not response:
             return  Response(
-            status_code=HTTPStatus.NOT_FOUND.value,
-            body=json.dumps({'message':'route not found'})
+            status_code=HTTPStatus.NOT_FOUND.value
         )
         headers = {
             'Location': response['long_url'],
