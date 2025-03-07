@@ -6,7 +6,6 @@ shorten_schema = {
     "long_url": {
       "type": "string",
       "format": "uri",
-      "description": "The original long URL to be shortened",
       "minLength": 1,
       "errorMessage": {
         "type": "The long_url must be a string",

@@ -22,7 +22,8 @@ class MainController:
             'counter': 0,
             'created_at': datetime.now().isoformat(),
         })
-        if 'ResponseMetadata' in response and 'HTTPStatusCode' in response['ResponseMetadata'] and response['ResponseMetadata']['HTTPStatusCode'] == HTTPStatus.OK.value:
+        if ('ResponseMetadata' in response and 'HTTPStatusCode' in response['ResponseMetadata']
+                and response['ResponseMetadata']['HTTPStatusCode'] == HTTPStatus.OK.value):
             url = f"{os.environ['API_ENDPOINT']}{short_id}"
             return Response(status_code=201,body=json.dumps({'short_url':url}))
 
@@ -35,6 +36,8 @@ class MainController:
 
     def redirect(self, short_id):
         print(short_id)
+        response = self.db_module.fetch_item(short_id)
+        print(response)
         headers = {
             'Location': 'https://www.apple.com',
             'Cache-Control': 'no-cache'
