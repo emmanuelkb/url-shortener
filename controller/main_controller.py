@@ -1,3 +1,4 @@
+import json
 import os
 import random
 import string
@@ -23,7 +24,7 @@ class MainController:
         })
         if 'ResponseMetadata' in response and 'HTTPStatusCode' in response['ResponseMetadata'] and response['ResponseMetadata']['HTTPStatusCode'] == HTTPStatus.OK.value:
             url = f"{os.environ['API_ENDPOINT']}{short_id}"
-            return Response(status_code=201,body=url)
+            return Response(status_code=201,body=json.dumps({'short_url':url}))
 
     def fetch_url(self, query_params):
         #Validate payload
