@@ -29,7 +29,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref UrlTable
-          API_ENDPOINT: "https://9vqbc45bzc.execute-api.eu-west-1.amazonaws.com/Prod/"
+          API_ENDPOINT: "https://s-hrt.com/"
       Policies:
         - AmazonSSMFullAccess
         - DynamoDBCrudPolicy:
