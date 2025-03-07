@@ -1,19 +1,18 @@
+import os
 import random
 import string
 from datetime import datetime
 from http import HTTPStatus
-from utilities import schema_validation
+from utilities import schema_validation,exceptions_handler
 from aws_lambda_powertools.event_handler import Response
-from aws_lambda_powertools.utilities.validation import SchemaValidationError, validate
-
+from aws_lambda_powertools.utilities.validation import validate
 
 class MainController:
     def __init__(self, db_module):
         self.db_module = db_module
 
-
+    @exceptions_handler.exceptions_handler
     def shorten_url(self, payload):
-        print(payload)
         validate(event=payload,schema=schema_validation.shorten_schema)
         short_id = self.generate_short_id()
         response = self.db_module.put_item({
@@ -22,8 +21,9 @@ class MainController:
             'counter': 0,
             'created_at': datetime.now().isoformat(),
         })
-        print(response)
-        return response
+        if 'ResponseMetadata' in response and 'HTTPStatusCode' in response['ResponseMetadata'] and response['ResponseMetadata']['HTTPStatusCode'] == HTTPStatus.OK.value:
+            url = f"{os.environ['API_ENDPOINT']}{short_id}"
+            return Response(status_code=201,body=url)
 
     def fetch_url(self, query_params):
         #Validate payload

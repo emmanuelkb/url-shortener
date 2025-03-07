@@ -33,6 +33,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref UrlTable
+          API_ENDPOINT: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
       Policies:
         - AmazonSSMFullAccess
         - DynamoDBCrudPolicy:
