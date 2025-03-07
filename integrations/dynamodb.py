@@ -25,7 +25,6 @@ class DynamoDB:
 
     def put_item(self,payload):
         try:
-            response = self.__table.put_item(Item=payload)
-            print(response)
+            return self.__table.put_item(Item=payload)
         except Exception as e:
             print("Error adding item to table:", str(e))
