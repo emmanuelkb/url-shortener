@@ -13,11 +13,10 @@ class DynamoDB:
                     'short_id' : short_id
                 })
             if 'Item' in response:
-                print("item found")
                 return response['Item']
             else:
                 print("item not found")
-                return {}
+                return None
         except Exception as e:
             print("Error getting item:", str(e))
 

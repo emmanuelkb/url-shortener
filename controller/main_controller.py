@@ -13,7 +13,8 @@ class MainController:
         self.db_module = db_module
 
     @exceptions_handler.exceptions_handler
-    def shorten_url(self, payload):
+    def shorten_url(self, payload:dict):
+        # Todo: Implement caching and counter update
         validate(event=payload,schema=schema_validation.shorten_schema)
         short_id = self.generate_short_id()
         response = self.db_module.put_item({
@@ -27,19 +28,23 @@ class MainController:
             url = f"{os.environ['API_ENDPOINT']}{short_id}"
             return Response(status_code=201,body=json.dumps({'short_url':url}))
 
-    def fetch_url(self, query_params):
+    def fetch_url(self, query_params:dict):
         #Validate payload
         print(query_params)
         response = self.db_module.fetch_item(query_params['short_id'])
         print(response)
         return response
 
-    def redirect(self, short_id):
-        print(short_id)
-        response = self.db_module.fetch_item(short_id)
-        print(response)
+    def redirect(self, short_id:str):
+        # Todo: Implement caching and counter update
+        response = self.db_module.fetch_item('Cx2N7e')
+        if not response:
+            return  Response(
+            status_code=HTTPStatus.NOT_FOUND.value,
+            body=json.dumps({'message':'route not found'})
+        )
         headers = {
-            'Location': 'https://www.apple.com',
+            'Location': response['long_url'],
             'Cache-Control': 'no-cache'
         }
         return Response(
