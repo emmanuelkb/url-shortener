@@ -28,5 +28,5 @@ def redirect_url(short_id:str):
     return CONTROLLER.redirect(short_id)
 
 def lambda_handler(event: dict, context: LambdaContext) -> dict:
-    print(e)
+    print(event)
     return APP.resolve(event, context)
