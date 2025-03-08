@@ -5,7 +5,7 @@ from integrations.dynamodb import  DynamoDB
 from integrations.paramstore import  ParameterStore
 from integrations.redis_integration import RedisCache
 from aws_lambda_powertools.utilities.typing import LambdaContext
-from aws_lambda_powertools.event_handler import APIGatewayRestResolver
+from aws_lambda_powertools.event_handler import APIGatewayRestResolver, CORSConfig
 
 # Initializations outside handler to keep warm
 # tracer = Tracer()
@@ -14,8 +14,9 @@ DB_CLIENT = DynamoDB()
 SSM_CLIENT = ParameterStore()
 REDIS_CONFIG = SSM_CLIENT.get_parameter(os.environ['REDIS_CONFIG'])
 REDIS_CLIENT = RedisCache(REDIS_CONFIG)
-APP = APIGatewayRestResolver()
 CONTROLLER = main_controller.MainController(DB_CLIENT,cache=REDIS_CLIENT)
+cors_config = CORSConfig(allow_origin="*")
+APP = APIGatewayRestResolver(cors=cors_config)
 
 @APP.post("/shorten")
 def create_url():
