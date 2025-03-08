@@ -20,6 +20,9 @@ This project is built using the following AWS services:
 - **Amazon DynamoDB**: Stores URL mappings
 - **AWS CloudFormation/SAM**: Manages infrastructure as code
 - **AWS CodePipeline**: Provides CI/CD pipeline for automated deployments
+- **AWS ParameterStore**: Stores sensitive credentials
+- **Redis**: For Caching
+- **AWS SQS**: Queueing Counter Updates (Not implemented Yet)
 
 
 ## Getting Started

@@ -30,6 +30,7 @@ Resources:
         Variables:
           TABLE_NAME: !Ref UrlTable
           API_ENDPOINT: "https://s-hrt.com/"
+          REDIS_CONFIG: redis-config
       Policies:
         - AmazonSSMFullAccess
         - DynamoDBCrudPolicy:
@@ -40,6 +41,36 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: ANY
+
+#  CounterUpdateQueue:
+#    Type: AWS::SQS::Queue
+#    Properties:
+#      QueueName: url-shortener-counter-queue
+#      VisibilityTimeout: 30
+#      MessageRetentionPeriod: 3600
+#
+#  CounterUpdateFunction:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      CodeUri: .
+#      Handler: app/counter_update.lambda_handler
+#      Runtime: python3.12
+#      ReservedConcurrentExecutions: 1
+#      Timeout: 30
+#      Environment:
+#        Variables:
+#          TABLE_NAME: !Ref UrlTable
+#      Policies:
+#        - AmazonSQSFullAccess
+#        - DynamoDBCrudPolicy:
+#            TableName: !Ref UrlTable
+#      Events:
+#        SQSEvent:
+#          Type: SQS
+#          Properties:
+#            Queue: !GetAtt CounterUpdateQueue.Arn
+#            BatchSize: 10
+#            MaximumBatchingWindowInSeconds: 30
 
 Outputs:
   UrlShortenerFunction:
