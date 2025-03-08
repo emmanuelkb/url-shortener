@@ -1,6 +1,6 @@
-# from aws_lambda_powertools import Logger, Tracer
 import os
 from controller import main_controller
+from aws_lambda_powertools import Logger
 from integrations.dynamodb import  DynamoDB
 from integrations.paramstore import  ParameterStore
 from integrations.redis_integration import RedisCache
@@ -8,8 +8,7 @@ from aws_lambda_powertools.utilities.typing import LambdaContext
 from aws_lambda_powertools.event_handler import APIGatewayRestResolver, CORSConfig
 
 # Initializations outside handler to keep warm
-# tracer = Tracer()
-# logger = Logger()
+logger = Logger()
 DB_CLIENT = DynamoDB()
 SSM_CLIENT = ParameterStore()
 REDIS_CONFIG = SSM_CLIENT.get_parameter(os.environ['REDIS_CONFIG'])
@@ -31,4 +30,5 @@ def redirect_url(short_id:str):
     return CONTROLLER.redirect(short_id)
 
 def lambda_handler(event: dict, context: LambdaContext) -> dict:
+    logger.info(event)
     return APP.resolve(event, context)
