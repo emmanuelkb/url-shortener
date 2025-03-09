@@ -24,8 +24,8 @@ Resources:
       Handler: app/main.lambda_handler
       Runtime: python3.12
       FunctionName: url-shortener
-      MemorySize: 512
-      Timeout: 900
+      MemorySize: 356
+      Timeout: 60
       Environment:
         Variables:
           TABLE_NAME: !Ref UrlTable
